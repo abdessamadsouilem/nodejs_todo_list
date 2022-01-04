@@ -1,14 +1,15 @@
 const http = require('http');
-const bodyParser = require("body-parser");
+const querystring = require('querystring');
 
 
 
-const { createNewTask } = require('./data_mysql/task_crud')
+const { createNewTask } = require('./data_mysql/task_crud');
 const server = http.createServer((req, res) => {
-    console.log(req.body);
+
     if (req.url === '/api/create_task' && req.method === 'POST') {
+
         console.log("it's working");
-        console.log(req.body);
+        console.log(req.params);
         createNewTask(req, res);
     }
 })
