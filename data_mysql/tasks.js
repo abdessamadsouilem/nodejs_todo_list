@@ -7,15 +7,13 @@ class Task {
         this.description = description;
     }
 
-    
-
     save() {
         let d = new Date();
         let year = d.getFullYear();
         let month = d.getMonth() + 1;
-        let date = d.getDate();
+        let day = d.getDate();
 
-        let createdAtDate = `${year}-${month} -${date}`;
+        let createdAtDate = `${year}-${month} -${day}`;
 
         let sql =
             `INSERT INTO tasks(
@@ -34,16 +32,32 @@ class Task {
         return newtask;
     }
 
-    static findAll() {
+    getAllTasks() {
         let sql = "SELECT * FROM tasks";
-
-        return db.execute(sql);
+        return db.connection.query(sql, function (err, results) {
+            if (err) {
+                throw err;
+            }
+            console.log("hello");
+            return results; // good);
+        });
     }
 
-    static finconnectionyId(id) {
+    getTaskById(id) {
         let sql = `SELECT * FROM tasks WHERE id = ${id}`;
 
-        return db.execute(sql);
+        return db.connection.query(sql);
+    }
+
+    Delete(id) {
+        let sql = `DELETE FROM tasks WHERE id =  ${id}`;
+        return db.connection.query(sql);
+    }
+
+    UpdateTask(id) {
+        let sql = `UPDATE tasks SET title = '${this.title}' , Description = '${this.description}' WHERE id = ${id}`;
+        return db.connection.query(sql);
+
     }
 }
 
